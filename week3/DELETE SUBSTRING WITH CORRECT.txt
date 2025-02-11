@@ -1,42 +1,43 @@
+// Program by Anamay Tripathy
+// Removing all occurrences of a substring from a string
+
 #include <iostream>
 #include <cstring>
 using namespace std;
 
 int main() {
-    char main[50], sub[50];
-    int i, j, k, lengthmain, lengthsub, flag;
+    char mainStr[50], subStr[50]; // Renamed 'main' to 'mainStr' and 'sub' to 'subStr'
+    int i, j, k, lengthMain, lengthSub, flag;
+
     cout << "Please enter your main string: \n";
-    cin.getline(main, 50);
-    cout << "Please enter your sub string: \n";
-    cin.getline(sub, 50);
+    cin.getline(mainStr, 50);
+    cout << "Please enter your substring: \n";
+    cin.getline(subStr, 50);
 
-    lengthmain = strlen(main);
-    lengthsub = strlen(sub);
+    lengthMain = strlen(mainStr);
+    lengthSub = strlen(subStr);
 
-    for (i = 0; i <= lengthmain - lengthsub; i++) {
-        if (main[i] == sub[0]) {
+    for (i = 0; i <= lengthMain - lengthSub; i++) {
+        if (mainStr[i] == subStr[0]) {
             flag = 1;
-            for (j = 0; j < lengthsub; j++) {
-                if (main[i + j] != sub[j]) {
+            for (j = 0; j < lengthSub; j++) {
+                if (mainStr[i + j] != subStr[j]) {
                     flag = 0;
                     break;
                 }
             }
             if (flag == 1) {
-                for (k = i; k < lengthmain - lengthsub; k++) {
-                    main[k] = main[k + lengthsub];
+                for (k = i; k <= lengthMain - lengthSub; k++) {  // Fixed shifting loop
+                    mainStr[k] = mainStr[k + lengthSub];
                 }
-                main[k] = '\0';
-                // Update lengthmain after deleting the substring
-                lengthmain = strlen(main);
-                // Reset i to recheck for more occurrences
-                i = -1;
+                mainStr[k] = '\0';  // Ensure null termination
+                lengthMain = strlen(mainStr);
+                i = -1;  // Reset index to check for repeated occurrences
             }
         }
     }
 
-    cout << "The string after deletion is:\n";
-    cout << main;
+    cout << "The string after deletion is:\n" << mainStr << endl;
 
     return 0;
 }
