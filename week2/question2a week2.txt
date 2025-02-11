@@ -1,0 +1,65 @@
+// # anamaytripathy
+#include <iostream>
+using namespace std;
+
+int main() {
+    int m;
+    
+    // Get matrix dimension
+    cout << "Please enter the dimension of the square matrix: ";
+    cin >> m;
+
+    if (m <= 0) {
+        cout << "Invalid matrix dimension! Exiting program.\n";
+        return 1;
+    }
+
+    int matrix[m][m], a[(m * (m + 1)) / 2]; // 1D array for storing non-zero elements
+    int index = 0;
+
+    // Input only the non-zero elements of the upper triangular matrix
+    cout << "Please enter the non-zero elements of the upper triangular matrix:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
+            if (i > j)
+                matrix[i][j] = 0; // Lower triangle is zero
+            else {
+                cin >> matrix[i][j];
+                a[index++] = matrix[i][j]; // Store in 1D array
+            }
+        }
+    }
+
+    // Display the upper triangular matrix
+    cout << "\nThe entered upper triangular matrix is:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    // Display the mapped 1D array
+    cout << "\nThe mapped 1D array storing only non-zero elements is:\n";
+    for (int i = 0; i < index; i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+
+    // Retrieve an element
+    int row, col;
+    cout << "\nPlease enter the row and column to be retrieved: ";
+    cin >> row >> col;
+
+    // Validate indices
+    if (row < 0 || row >= m || col < 0 || col >= m) {
+        cout << "Invalid indices! Please enter values within the matrix size.\n";
+    } else if (row > col) {
+        cout << "The element at (" << row << ", " << col << ") is: 0\n";
+    } else {
+        cout << "The element at (" << row << ", " << col << ") is: "
+             << a[(row * m) + col - ((row * (row + 1)) / 2)] << endl;
+    }
+
+    return 0;
+}

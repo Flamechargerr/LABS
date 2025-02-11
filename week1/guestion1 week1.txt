@@ -1,0 +1,63 @@
+// # anamaytripathy
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee {
+    int emp_num;
+    string emp_name;
+    float basic, da, it, net_sal, gross_sal;
+
+public:
+    // Function to get employee details
+    void getData() {
+        cout << "\nEnter Employee Number: ";
+        cin >> emp_num;
+        cin.ignore(); // To handle buffer issues
+        cout << "Enter Employee Name: ";
+        getline(cin, emp_name);
+        cout << "Enter Basic Salary: ";
+        cin >> basic;
+    }
+
+    // Function to calculate salary components
+    void calculateSalary() {
+        da = 0.12 * basic;  // 12% DA
+        gross_sal = basic + da;
+        it = 0.18 * gross_sal; // 18% Income Tax
+        net_sal = gross_sal - it;
+    }
+
+    // Function to display employee details
+    void showData() {
+        calculateSalary();  // Ensure salary is calculated before displaying
+        cout << "\nEmployee Details:\n";
+        cout << "Employee Number: " << emp_num << endl;
+        cout << "Employee Name: " << emp_name << endl;
+        cout << "Basic Salary: " << basic << endl;
+        cout << "Dearness Allowance (DA): " << da << endl;
+        cout << "Gross Salary: " << gross_sal << endl;
+        cout << "Income Tax (IT): " << it << endl;
+        cout << "Net Salary: " << net_sal << "\n";
+    }
+};
+
+int main() {
+    int n;
+    cout << "Enter the number of employees: ";
+    cin >> n;
+
+    Employee empList[n]; // Array of Employee objects
+
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter details for Employee " << i + 1 << ":\n";
+        empList[i].getData();
+    }
+
+    cout << "\nDisplaying Employee Information:\n";
+    for (int i = 0; i < n; i++) {
+        empList[i].showData();
+    }
+
+    return 0;
+}
