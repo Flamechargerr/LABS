@@ -1,100 +1,91 @@
-//220968002
-//Keerthan Kumar C
-//parenthesis using stack
-#include<iostream>
+// Program by Anamay Tripathy
+// Stack Implementation with Menu
+
+#include <iostream>
 using namespace std;
-int stack[100],top=-1;
-int isempty();
-int isfull();
-void push(int ele)
-        {
-                if(isfull())
-                {
-                        cout<<"Stack overflow\n";
-                }
-                else
-                {
-                        top++;
-                        stack[top]=ele;
-                }
-        }
-void pop()
-{
-        if(isempty())
-        {
-                cout<<"Stcak underflow\n";
-        }
-        else
-        {
-                cout<<"the popped element is"<<stack[top]<<endl;
-                top--;
-        }
+
+#define MAX 100
+
+int stack[MAX], top = -1;
+
+bool isEmpty() {
+    return top == -1;
 }
-int isfull()
-{
-        if(top==99)
-        {
-                return 1;
-        }else
+
+bool isFull() {
+    return top == MAX - 1;
+}
+
+void push(int ele) {
+    if (isFull()) {
+        cout << "Stack overflow\n";
+    } else {
+        stack[++top] = ele;
+        cout << ele << " pushed into stack.\n";
+    }
+}
+
+void pop() {
+    if (isEmpty()) {
+        cout << "Stack underflow\n";
+    } else {
+        cout << "Popped element: " << stack[top--] << endl;
+    }
+}
+
+void display() {
+    if (isEmpty()) {
+        cout << "Stack is empty\n";
+    } else {
+        cout << "Stack contents: ";
+        for (int i = top; i >= 0; i--) {
+            cout << stack[i] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void peek() {
+    if (isEmpty()) {
+        cout << "Stack is empty\n";
+    } else {
+        cout << "Top element: " << stack[top] << endl;
+    }
+}
+
+int main() {
+    int choice, ele;
+    
+    while (true) {
+        cout << "\nStack Operations:\n";
+        cout << "1) Push element to stack\n";
+        cout << "2) Pop element from stack\n";
+        cout << "3) Display stack\n";
+        cout << "4) Peek top element\n";
+        cout << "5) Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter element to push: ";
+                cin >> ele;
+                push(ele);
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                peek();
+                break;
+            case 5:
+                cout << "Exiting...\n";
                 return 0;
-}
-int isempty()
-{
-        if(top==-1)
-                return 1;
-        else
-                return 0;
-}
-void display()
-{
-        int i;
-        for(i=top;i>=0;i--)
-        {
-                cout<<stack[i]<<" ";
+            default:
+                cout << "Invalid input! Please enter a valid option.\n";
         }
-}
-void peek()
-{
-        if(isempty())
-        {
-                cout<<"Stack underflow\n";
-        }
-        else
-                cout<<"The peek element is"<<stack[top]<<endl;
-}
-int main()
-{
-        int choice;
-        cout<<"Please enter your choice\n";
-        cout<<"1)Push element to stack\n";
-        cout<<"2)pop element from stack \n";
-        cout<<"3)Display stack\n";
-        cout<<"4)Exit\n";
-        do
-        {
-                cout<<"Enter your choice \n";
-                cin>>choice;                                                                                                                               
-                switch(choice)
-                {
-                        case 1:{
-                                cout<<"Please enter element to be pushed\n";
-                                int ele;
-                                cin>>ele;
-                                push(ele);
-                                break;}
-                        case 2:{
-                                pop();
-                                break;}
-                        case 3:{
-                                cout<<"The contents of stack are\n";
-                                display();
-                                break;}
-                        case 4:{
-                                cout<<"exit\n";
-                                break;}
-                        default:{
-                                cout<<"invalid input";
-                                break;}
-                }
-        }while(choice!=4);
+    }
 }
