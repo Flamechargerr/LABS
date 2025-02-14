@@ -1,6 +1,5 @@
-//220968002
-//Keerthan Kumar C
-//polynomial addition using double linked list
+//230968270
+//Polynomial addition using doubly linked list
 #include<iostream>
 using namespace std;
 
@@ -37,7 +36,8 @@ class LinkedList {
                 newNode->prev = temp;
             }
         }        
-	LinkedList Add(LinkedList &ll1,LinkedList &ll2) {
+	
+        LinkedList Add(LinkedList &ll1, LinkedList &ll2) {
             LinkedList sum;
 
             Node* n1 = ll1.head;
@@ -76,7 +76,8 @@ class LinkedList {
         void print() {
             Node* temp = head;
             while(temp != NULL) {
-                cout << temp->coeff << "x^" << temp->pow << " + ";
+                cout << temp->coeff << "x^" << temp->pow;
+                if (temp->next != NULL) cout << " + ";
                 temp = temp->next;
             }
             cout << endl;
@@ -84,27 +85,27 @@ class LinkedList {
 };
 
 int main() {
-        LinkedList ll1,ll2;
-        int n1,n2,coeff,exp;
-        cout<<"Please enter the number of terms in polynomial 1"<<endl;
-        cin>>n1;
-        for(int i=0;i<n1;i++)
-        {
-                cout<<"Please enter the coefficient and exponent of term "<<(i+1)<<endl;
-                cin>>coeff>>exp;
-                ll1.addNode(coeff,exp);
+        LinkedList ll1, ll2;
+        int n1, n2, coeff, exp;
+        
+        cout << "Enter the number of terms in polynomial 1: ";
+        cin >> n1;
+        for(int i = 0; i < n1; i++) {
+                cout << "Enter coefficient and exponent of term " << (i + 1) << ": ";
+                cin >> coeff >> exp;
+                ll1.addNode(coeff, exp);
         }
 
-        cout<<"Please enter the number of terms in polynomial 2"<<endl;
-        cin>>n2;
-        for(int i=0;i<n2;i++)
-        {
-                cout<<"Please enter the coefficient and exponent of term "<<(i+1)<<endl;
-                cin>>coeff>>exp;
-                ll2.addNode(coeff,exp);
+        cout << "Enter the number of terms in polynomial 2: ";
+        cin >> n2;
+        for(int i = 0; i < n2; i++) {
+                cout << "Enter coefficient and exponent of term " << (i + 1) << ": ";
+                cin >> coeff >> exp;
+                ll2.addNode(coeff, exp);
         }
-        cout<<"The resultant polynomial is"<<endl;
-        LinkedList sum=sum.Add(ll1,ll2);
+
+        cout << "The resultant polynomial is: ";
+        LinkedList sum = sum.Add(ll1, ll2);
         sum.print();
 
     return 0;
