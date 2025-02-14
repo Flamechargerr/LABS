@@ -1,3 +1,7 @@
+// 230968270
+// Anamay Tripathy
+// Polynomial Addition using Doubly Linked List
+
 #include <iostream>
 using namespace std;
 
@@ -87,6 +91,15 @@ void displayPolynomial(Term* poly) {
     cout << endl;
 }
 
+// Function to delete polynomial linked list and free memory
+void deletePolynomial(Term*& poly) {
+    while (poly != nullptr) {
+        Term* temp = poly;
+        poly = poly->next;
+        delete temp;
+    }
+}
+
 int main() {
     Term* poly1 = nullptr;
     Term* poly2 = nullptr;
@@ -115,23 +128,9 @@ int main() {
     displayPolynomial(result);
 
     // Clean up memory
-    while (poly1 != nullptr) {
-        Term* temp = poly1;
-        poly1 = poly1->next;
-        delete temp;
-    }
-    
-    while (poly2 != nullptr) {
-        Term* temp = poly2;
-        poly2 = poly2->next;
-        delete temp;
-    }
-    
-    while (result != nullptr) {
-        Term* temp = result;
-        result = result->next;
-        delete temp;
-    }
-    
+    deletePolynomial(poly1);
+    deletePolynomial(poly2);
+    deletePolynomial(result);
+
     return 0;
 }
