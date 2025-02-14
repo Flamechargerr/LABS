@@ -1,3 +1,6 @@
+// Anamay Tripathy
+// Implementation of Linked List Operations
+
 #include <iostream>
 #include <cstdlib> // for exit
 
