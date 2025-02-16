@@ -1,166 +1,108 @@
+// Anamay Tripathy (230968270)
 #include <iostream>
 using namespace std;
 
-struct node
-{
+struct node {
     int data;
     struct node* left;
     struct node* right;
 };
 
-struct node* create()
-{
+// Function to create a binary tree
+struct node* create() {
     struct node* newnode = new struct node;
     int x;
-    cout << "Please enter the data (-1 if no child nodes) " << endl;
+    cout << "Enter data (-1 for no child nodes): ";
     cin >> x;
-    if (x == -1)
-    {
+    if (x == -1) {
         return NULL;
     }
     newnode->data = x;
-    cout << "Please enter data for left of " << x << endl;
+    cout << "Enter data for left of " << x << endl;
     newnode->left = create();
-    cout << "Please enter data for right of " << x << endl;
+    cout << "Enter data for right of " << x << endl;
     newnode->right = create();
     return newnode;
 }
 
-struct node* c;
-int d = 0;
-
-void findParent(struct node* root, int ele, int a)
-{
-    if (a > 1)
-    {
+// Function to find the parent of a given node
+void findParent(struct node* root, int ele, struct node* parent = NULL) {
+    if (root == nullptr) {
         return;
     }
-    if (root == nullptr)
-    {
-        cout << "Element or tree is null." << endl;
+    if (root->data == ele) {
+        if (parent)
+            cout << "Parent of " << ele << " is " << parent->data << endl;
+        else
+            cout << "The element is the root node." << endl;
         return;
     }
-
-    if ((root->left != nullptr && root->left->data == ele) || (root->right != nullptr && root->right->data == ele))
-    {
-        cout << "Parent of " << ele << " is " << root->data << endl;
-        d = 2;
-        return;
-    }
-    else
-    {
-        findParent(root->left, ele, d);
-        findParent(root->right, ele, d);
-    }
+    findParent(root->left, ele, root);
+    findParent(root->right, ele, root);
 }
 
-int treeDepth(struct node* root)
-{
-    if (root == nullptr)
-    {
+// Function to find the depth of the tree
+int treeDepth(struct node* root) {
+    if (root == nullptr) {
         return 0;
     }
-
-    int leftDepth = treeDepth(root->left);
-    int rightDepth = treeDepth(root->right);
-    if (leftDepth >= rightDepth)
-    {
-        return 1 + leftDepth;
-    }
-    else
-        return 1 + rightDepth;
+    return 1 + max(treeDepth(root->left), treeDepth(root->right));
 }
 
 // Helper function to find ancestors of a given element
-bool findAncestors(struct node* root, int ele)
-{
-    if (root == nullptr)
-    {
+bool findAncestors(struct node* root, int ele) {
+    if (root == nullptr) {
         return false;
     }
-
-    if (root->data == ele)
-    {
+    if (root->data == ele) {
         return true;
     }
-
-    if (findAncestors(root->left, ele) || findAncestors(root->right, ele))
-    {
+    if (findAncestors(root->left, ele) || findAncestors(root->right, ele)) {
         cout << root->data << " ";
         return true;
     }
-
     return false;
 }
 
-void printAncestors(struct node* root, int ele)
-{
-    if (root == nullptr)
-    {
-        cout << "Element or tree is null." << endl;
-        return;
-    }
-
-    if (root->data == ele)
-    {
-        cout << "Ancestors of " << ele << " are: ";
-        return;
-    }
-
-    if (!findAncestors(root, ele))
-    {
+// Wrapper function to print ancestors
+void printAncestors(struct node* root, int ele) {
+    if (!findAncestors(root, ele)) {
         cout << "Element not found in the tree." << endl;
     }
 }
 
-int main()
-{
-    struct node* root;
-    root = create();
+int main() {
+    struct node* root = create();
     int ch, e;
     cout << "The Tree has Been Created" << endl;
-    while (1)
-    {
-        cout << "Please enter your choice" << endl;
-        cout << "1. Find Parent of an element in tree" << endl;
+    while (true) {
+        cout << "\nMenu:\n";
+        cout << "1. Find Parent of an element" << endl;
         cout << "2. Find Depth of the tree" << endl;
-        cout << "3. Find Ancestors of an element of the tree" << endl;
+        cout << "3. Find Ancestors of an element" << endl;
         cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
         cin >> ch;
-        switch (ch)
-        {
+        switch (ch) {
         case 1:
-        {
-            cout << "Please enter the element whose parent is to be known" << endl;
+            cout << "Enter element: ";
             cin >> e;
-            if (root->data == e)
-            {
-                cout << "The element is the root element" << endl;
-            }
-            else
-            {
-                findParent(root, e, d);
-            }
+            findParent(root, e);
             break;
-        }
         case 2:
-        {
-            cout << "The depth of the tree is:" << endl;
-            int depth = treeDepth(root);
-            cout << depth << endl;
+            cout << "Tree Depth: " << treeDepth(root) << endl;
             break;
-        }
         case 3:
-        {
-            cout << "Please enter the element to find its ancestors: ";
-            int element;
-            cin >> element;
-            printAncestors(root, element);
+            cout << "Enter element: ";
+            cin >> e;
+            cout << "Ancestors of " << e << ": ";
+            printAncestors(root, e);
             cout << endl;
             break;
-        }
         case 4:
-            exit(1);
+            exit(0);
+        default:
+            cout << "Invalid choice, please try again." << endl;
         }
     }
 }
