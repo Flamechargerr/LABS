@@ -1,114 +1,122 @@
-//Write a C++ program to remove duplicates from a stack using arrays.
-//for example of using classes also
+// Name: Anamay Tripathy
+// Code: 230968270
+
 #include<iostream>
 using namespace std;
+
 #define MAX_SIZE 20
-class Stack
-{
-    private:
 
-        int top;
-        int arr[MAX_SIZE];
+class Stack {
+private:
+    int top;
+    int arr[MAX_SIZE];
 
-    public:
+public:
+    // Constructor initializes the stack
+    Stack() : top(-1) {}
 
-        Stack()
-        {
-            top=-1;
+    // Push an element onto the stack
+    void push(int ele) {
+        if (isFull()) {
+            cout << "Stack overflow\n";
+        } else {
+            arr[++top] = ele;
         }
-        void push(int ele) {
-            if (isfull()) {
-                cout << "Stack overflow\n";
-            } else {
-                top++;
-                arr[top] = ele;
+    }
+
+    // Pop an element from the stack
+    int pop() {
+        if (isEmpty()) {
+            cout << "Stack underflow\n";
+            return -1; // return -1 if stack is empty
+        } else {
+            return arr[top--];
+        }
+    }
+
+    // Check if the stack is full
+    bool isFull() {
+        return top == MAX_SIZE - 1;
+    }
+
+    // Check if the stack is empty
+    bool isEmpty() {
+        return top == -1;
+    }
+
+    // Peek the top element of the stack
+    int peek() {
+        if (isEmpty()) {
+            cout << "Stack underflow";
+            return -1; // return -1 if empty
+        } else {
+            return arr[top];
+        }
+    }
+
+    // Display the elements in the stack
+    void display() {
+        if (isEmpty()) {
+            cout << "Stack underflow";
+        } else {
+            for (int i = top; i >= 0; i--) {
+                cout << arr[i] << " ";
             }
         }
-         int pop() {
-            if (isempty()) {
-                cout << "Stack underflow\n";
-            } else {
-                    int element=arr[top];
-                    top--;
-                    return element;
+        cout << endl;
+    }
 
+    // Remove duplicates from the stack
+    void removeDuplicates() {
+        Stack tempStack;
+        int ele;
+
+        // Traverse the original stack
+        while (!isEmpty()) {
+            ele = pop();
+            bool isDuplicate = false;
+
+            // Check if the element is already in tempStack
+            for (int i = tempStack.top; i >= 0; i--) {
+                if (tempStack.arr[i] == ele) {
+                    isDuplicate = true;
+                    break;
                 }
             }
-        int isfull() {
-            if (top == MAX_SIZE-1) {
-                return 1;
-            } else
-                return 0;
-        }
 
-        int isempty() {
-            if (top == -1)
-                return 1;
-            else
-                return 0;
-        }
-        int peek()
-        {
-            if(isempty())
-                cout<<"Stack underflow";
-            else
-                return arr[top];
-        }
-        void display()
-        {
-            if(isempty())
-                cout<<"Stack underflow";
-            for(int i=top;i>=0;i--)
-            {
-                cout<<arr[i]<<" ";
+            // If not a duplicate, push it onto tempStack
+            if (!isDuplicate) {
+                tempStack.push(ele);
             }
-            cout<<endl;
-        }
-        void checkdup()
-        {
-            Stack t;
-            int ele=pop();
-            t.push(ele);
-
-            while(isempty()!=1)
-            {
-                ele=pop();
-                int flag=1;
-                for(int i=t.top;i>=0;i--)
-                {
-
-                    if(ele==t.arr[i])
-                    {
-                        flag=0;
-                        break;
-                    }
-                }
-                if(flag==1)
-                {
-                    t.push(ele);
-                }
-            }
-            t.display();
-
         }
 
-
+        // Display the stack without duplicates
+        cout << "Stack after removing duplicates: ";
+        tempStack.display();
+    }
 };
-int main()
-{
+
+int main() {
     Stack s;
-    int n,a[100];
-    cout<<"Enter number of elements to be pushed into stack"<<endl;
-    cin>>n;
-    cout<<"Enter elements to be pushed"<<endl;
-    for(int i=0;i<n;i++)
-    {
-        cin>>a[i];
+    int n, a[100];
+
+    // Input number of elements
+    cout << "Enter number of elements to be pushed into stack: ";
+    cin >> n;
+
+    // Input elements
+    cout << "Enter elements to be pushed: ";
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
         s.push(a[i]);
     }
-    cout<<"The stack elements are"<<endl;
-    s.display();
-    cout<<"The stack elements after removing duplicates are:"<<endl;
-    s.checkdup();
 
+    // Display stack elements
+    cout << "The stack elements are: ";
+    s.display();
+
+    // Remove duplicates and display updated stack
+    s.removeDuplicates();
+
+    return 0;
 }
