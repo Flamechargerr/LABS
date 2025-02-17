@@ -1,3 +1,6 @@
+// Name: Anamay Tripathy
+// Code: 230968270
+
 #include<iostream>
 #include<string.h>
 using namespace std;
@@ -5,36 +8,38 @@ using namespace std;
 int main() {
     char main[50], sub[50];
     int i, j, k, lengthmain = 0, lengthsub = 0, flag;
+
     cout << "Please enter your main string: \n";
-    cin.getline(main, 50);
+    cin.getline(main, 50);  // Read the main string
     cout << "Please enter your sub string: \n";
-    cin.getline(sub, 50);
+    cin.getline(sub, 50);   // Read the substring to be removed
 
     lengthmain = strlen(main);
     lengthsub = strlen(sub);
 
+    // Iterate through the main string to find the substring
     for (i = 0; i <= lengthmain - lengthsub; i++) {
-        if (main[i] == sub[0]) {
+        if (main[i] == sub[0]) {  // Check if the first character matches
             flag = 1;
             for (j = 0; j < lengthsub; j++) {
-                if (main[i + j] != sub[j]) {
+                if (main[i + j] != sub[j]) {  // If mismatch found
                     flag = 0;
                     break;
                 }
             }
-            if (flag == 1) {
-                for (k = i; k < lengthmain - lengthsub; k++) {
+            if (flag == 1) {  // If substring matches
+                for (k = i; k < lengthmain - lengthsub; k++) {  // Shift the remaining part of main string left
                     main[k] = main[k + lengthsub];
                 }
-                main[k] = '\0';
-                lengthmain = strlen(main);  
-                i--;  
+                main[k] = '\0';  // Add null terminator at the end of the string
+                lengthmain = strlen(main);  // Update the length of the main string
+                i--;  // Re-check the position after the shift
             }
         }
     }
 
     cout << "The string after deletion is:\n";
-    cout << main;
+    cout << main;  // Print the modified string
 
     return 0;
 }
