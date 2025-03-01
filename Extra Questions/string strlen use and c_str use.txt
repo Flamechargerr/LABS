@@ -11,5 +11,5 @@ int main()
     string exp = "hello";
     const char* a = exp.c_str();  // Converts the string to a C-style string (const char*)
     int b = strlen(a);  // Finds the length of the C-style string
-    cout << b;  // Outputs the length
+    cout << b;  // Output
 }
