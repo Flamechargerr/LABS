@@ -1,0 +1,91 @@
+// Program by Anamay Tripathy
+// Stack Implementation with Menu
+
+#include <iostream>
+using namespace std;
+
+#define MAX 100
+
+int stack[MAX], top = -1;
+
+bool isEmpty() {
+    return top == -1;
+}
+
+bool isFull() {
+    return top == MAX - 1;
+}
+
+void push(int ele) {
+    if (isFull()) {
+        cout << "Stack overflow\n";
+    } else {
+        stack[++top] = ele;
+        cout << ele << " pushed into stack.\n";
+    }
+}
+
+void pop() {
+    if (isEmpty()) {
+        cout << "Stack underflow\n";
+    } else {
+        cout << "Popped element: " << stack[top--] << endl;
+    }
+}
+
+void display() {
+    if (isEmpty()) {
+        cout << "Stack is empty\n";
+    } else {
+        cout << "Stack contents: ";
+        for (int i = top; i >= 0; i--) {
+            cout << stack[i] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void peek() {
+    if (isEmpty()) {
+        cout << "Stack is empty\n";
+    } else {
+        cout << "Top element: " << stack[top] << endl;
+    }
+}
+
+int main() {
+    int choice, ele;
+    
+    while (true) {
+        cout << "\nStack Operations:\n";
+        cout << "1) Push element to stack\n";
+        cout << "2) Pop element from stack\n";
+        cout << "3) Display stack\n";
+        cout << "4) Peek top element\n";
+        cout << "5) Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter element to push: ";
+                cin >> ele;
+                push(ele);
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                peek();
+                break;
+            case 5:
+                cout << "Exiting...\n";
+                return 0;
+            default:
+                cout << "Invalid input! Please enter a valid option.\n";
+        }
+    }
+}

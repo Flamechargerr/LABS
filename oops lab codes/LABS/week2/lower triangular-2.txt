@@ -1,0 +1,62 @@
+// # anamaytripathy
+#include <iostream>
+using namespace std;
+
+int main() {
+    int m;
+
+    // Getting matrix dimension
+    cout << "Enter the dimension of the lower triangular matrix: ";
+    cin >> m;
+
+    if (m <= 0) {
+        cout << "Invalid matrix dimension! Exiting program.\n";
+        return 1;
+    }
+
+    int lowerTriangular[(m * (m + 1)) / 2]; // 1D array to store non-zero elements
+    int index = 0;
+
+    // Input only the lower triangular elements
+    cout << "Enter the " << (m * (m + 1)) / 2 << " non-zero elements of the lower triangular matrix:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j <= i; j++) {
+            cin >> lowerTriangular[index++];
+        }
+    }
+
+    // Display the lower triangular matrix
+    cout << "\nThe entered lower triangular matrix is:\n";
+    index = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
+            if (i < j)
+                cout << "0 ";
+            else
+                cout << lowerTriangular[index++] << " ";
+        }
+        cout << endl;
+    }
+
+    // Display the mapped 1D array
+    cout << "\nThe mapped 1D array storing only non-zero elements is:\n";
+    for (int i = 0; i < (m * (m + 1)) / 2; i++) {
+        cout << lowerTriangular[i] << " ";
+    }
+    cout << endl;
+
+    // Retrieve an element from the matrix
+    int row, col;
+    cout << "\nEnter the row and column to retrieve: ";
+    cin >> row >> col;
+
+    if (row < 0 || row >= m || col < 0 || col >= m) {
+        cout << "Invalid indices! Please enter values within the matrix size.\n";
+    } else if (row < col) {
+        cout << "The element at (" << row << ", " << col << ") is: 0\n";
+    } else {
+        cout << "The element at (" << row << ", " << col << ") is: " << lowerTriangular[(row * (row + 1)) / 2 + col] << endl;
+    }
+
+    return 0;
+}

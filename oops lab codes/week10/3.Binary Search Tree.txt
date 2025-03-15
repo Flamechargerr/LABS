@@ -1,0 +1,95 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+struct node {
+    int data;
+    struct node* left;
+    struct node* right;
+
+    // Constructor for initializing node
+    node(int x) {
+        data = x;
+        left = right = NULL;
+    }
+};
+
+struct node* constructTree(struct node* root, int x) {
+    if (root == NULL) {
+        return new node(x);
+    }
+    if (x < root->data) {
+        root->left = constructTree(root->left, x);
+    } else {
+        root->right = constructTree(root->right, x);
+    }
+    return root;
+}
+
+void insert(struct node*& root) {
+    int data;
+    cout << "Enter data (-1 to exit): ";
+    cin >> data;
+    while (data != -1) {
+        root = constructTree(root, data);
+        cin >> data;
+    }
+}
+
+bool search(int ele, struct node* root) {
+    while (root != NULL) {
+        if (root->data == ele)
+            return true;
+        else if (root->data > ele)
+            root = root->left;
+        else
+            root = root->right;
+    }
+    return false;
+}
+
+void inorder(struct node* root) {
+    if (root == NULL) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+int main() {
+    int ch, e;
+    struct node* root = NULL;
+
+    while (true) {
+        cout << "\nPlease enter your choice:\n";
+        cout << "1. Construct a Binary Search Tree\n";
+        cout << "2. View tree (Inorder Traversal)\n";
+        cout << "3. Search for an element in the tree\n";
+        cout << "4. Exit\n";
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+                insert(root);
+                cout << "Tree construction successful.\n";
+                break;
+            case 2:
+                cout << "The Inorder traversal of the binary search tree is:\n";
+                inorder(root);
+                cout << endl;
+                break;
+            case 3:
+                cout << "Please enter the element to be searched: ";
+                cin >> e;
+                if (search(e, root)) {
+                    cout << "The entered element is present in the tree.\n";
+                } else {
+                    cout << "The entered element is not present in the tree.\n";
+                }
+                break;
+            case 4:
+                exit(0);
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
+}

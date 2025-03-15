@@ -1,0 +1,34 @@
+// Anamay Tripathy
+// String Concatenation
+
+#include <iostream>
+#include <cstdio>
+using namespace std;
+
+int main() {
+    char str1[100], str2[100];
+
+    cout << "Please enter string 1: " << endl;
+    cin.getline(str1, 100);
+    cout << "Please enter string 2: " << endl;
+    cin.getline(str2, 100);
+
+    int i = 0, j = 0;
+
+    // Find the length of the first string
+    while (str1[i] != '\0') {
+        i++;
+    }
+
+    // Append the second string to the first
+    while (str2[j] != '\0') {
+        str1[i] = str2[j];
+        j++;
+        i++;
+    }
+    str1[i] = '\0';  // Null terminate the concatenated string
+
+    cout << "String after concatenation: " << str1 << endl;
+
+    return 0;
+}

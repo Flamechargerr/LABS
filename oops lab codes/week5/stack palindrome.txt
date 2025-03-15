@@ -1,0 +1,59 @@
+// Program by Anamay Tripathy
+// Check if a String is Palindrome using Stack
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+char stack[100];
+int top = -1;
+
+bool isEmpty() {
+    return top == -1;
+}
+
+bool isFull() {
+    return top == 99;
+}
+
+void push(char ele) {
+    if (isFull()) {
+        cout << "Stack overflow\n";
+    } else {
+        stack[++top] = ele;
+    }
+}
+
+char pop() {
+    if (isEmpty()) {
+        cout << "Stack underflow\n";
+        return '\0';
+    } else {
+        return stack[top--];
+    }
+}
+
+int main() {
+    char str[100], reversed[100];
+    cout << "Please enter your string: ";
+    cin.getline(str, 100);
+
+    int length = strlen(str);
+
+    for (int i = 0; i < length; i++) {
+        push(str[i]);
+    }
+
+    for (int i = 0; i < length; i++) {
+        reversed[i] = pop();
+    }
+    reversed[length] = '\0';
+
+    if (strcmp(str, reversed) == 0) {
+        cout << "The string entered is a palindrome\n";
+    } else {
+        cout << "The string entered is not a palindrome\n";
+    }
+
+    return 0;
+}

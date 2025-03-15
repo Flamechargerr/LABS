@@ -1,0 +1,107 @@
+#include <iostream>
+using namespace std;
+
+// Anamay Tripathy - 230968270
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+// Function to create a new node dynamically
+Node* create() {
+    int x;
+    cout << "Enter data (-1 for no node): ";
+    cin >> x;
+    if (x == -1) return NULL;
+    
+    Node* newNode = new Node();
+    newNode->data = x;
+    
+    cout << "Enter left child of " << x << endl;
+    newNode->left = create();
+    
+    cout << "Enter right child of " << x << endl;
+    newNode->right = create();
+    
+    return newNode;
+}
+
+// Preorder Traversal (Root, Left, Right)
+void preorder(Node* root) {
+    if (!root) return;
+    cout << root->data << " ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+// Inorder Traversal (Left, Root, Right)
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+// Postorder Traversal (Left, Right, Root)
+void postorder(Node* root) {
+    if (!root) return;
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->data << " ";
+}
+
+// Function to count leaf nodes
+int countLeafNodes(Node* root) {
+    if (!root) return 0;
+    if (!root->left && !root->right) return 1;
+    return countLeafNodes(root->left) + countLeafNodes(root->right);
+}
+
+int main() {
+    // Creating the binary tree
+    cout << "\n--- Binary Tree Creation ---" << endl;
+    Node* root = create();
+    cout << "Tree Created Successfully!" << endl;
+    
+    int choice;
+    do {
+        cout << "\nMenu:" << endl;
+        cout << "1. Preorder Traversal" << endl;
+        cout << "2. Inorder Traversal" << endl;
+        cout << "3. Postorder Traversal" << endl;
+        cout << "4. Count Leaf Nodes" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1:
+                cout << "Preorder Traversal: ";
+                preorder(root);
+                cout << endl;
+                break;
+            case 2:
+                cout << "Inorder Traversal: ";
+                inorder(root);
+                cout << endl;
+                break;
+            case 3:
+                cout << "Postorder Traversal: ";
+                postorder(root);
+                cout << endl;
+                break;
+            case 4:
+                cout << "Total Leaf Nodes: " << countLeafNodes(root) << endl;
+                break;
+            case 5:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please enter again." << endl;
+        }
+    } while (choice != 5);
+    
+    return 0;
+}

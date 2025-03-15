@@ -1,0 +1,144 @@
+// 230968270
+// Anamay Tripathy
+// Postfix and Prefix Evaluation
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int stack[100], top = -1;
+
+int isempty();
+int isfull();
+void push(int ele) {
+    if (isfull()) {
+        cout << "Stack overflow\n";
+    } else {
+        top++;
+        stack[top] = ele;
+    }
+}
+
+int pop() {
+    if (isempty()) {
+        cout << "Stack underflow\n";
+        return -1;
+    } else {
+        int poppedElement = stack[top];
+        top--;
+        return poppedElement;
+    }
+}
+
+int isfull() {
+    return top == 99;
+}
+
+int isempty() {
+    return top == -1;
+}
+
+int evaluate(int a, int b, char op) {
+    switch (op) {
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            if (b != 0)
+                return a / b;
+            else {
+                cerr << "Error: Division by zero\n";
+                exit(1);
+            }
+        case '^':
+            return pow(a, b);
+        default:
+            return 0;
+    }
+}
+
+int main() {
+    int length = 0;
+    int a[100];
+    char operators[100];
+    int option, exi = 0, i = 0;
+
+    cout << "Enter an infix expression" << endl;
+    do {
+        cout << "1. Enter digit" << endl;
+        cout << "2. Enter operator" << endl;
+        cout << "3. Exit" << endl;
+        cin >> option;
+
+        switch (option) {
+            case 1:
+                cout << "Enter digit: ";
+                cin >> a[i];
+                operators[i] = '0';
+                break;
+            case 2:
+                cout << "Enter operator: ";
+                cin >> operators[i];
+                a[i] = -1;
+                break;
+            case 3:
+                exi = 5;
+                a[i] = -1;
+                operators[i] = '0';
+                break;
+        }
+        i++;
+        length++;
+    } while (exi != 5);
+
+    cout << "Operands array: ";
+    for (int j = 0; j < length; j++) {
+        if (a[j] != -1)
+            cout << a[j] << " ";
+    }
+    cout << endl;
+
+    cout << "Operators array: ";
+    for (int j = 0; j < length; j++) {
+        if (operators[j] != '0')
+            cout << operators[j] << " ";
+    }
+    cout << endl;
+
+    cout << "Enter choice of evaluation" << endl;
+    cout << "1. Postfix" << endl;
+    cout << "2. Prefix" << endl;
+    int ch;
+    cin >> ch;
+
+    if (ch == 1) {
+        for (int i = 0; i < length - 1; i++) {
+            if (a[i] != -1 && operators[i] == '0') {
+                push(a[i]);
+            } else if (a[i] == -1 && operators[i] != '0') {
+                int A = pop();
+                int B = pop();
+                int res = evaluate(B, A, operators[i]);
+                push(res);
+            }
+        }
+        cout << "The evaluated postfix output is: " << stack[top] << endl;
+    } else {
+        for (int i = length - 1; i >= 0; i--) {
+            if (a[i] != -1 && operators[i] == '0') {
+                push(a[i]);
+            } else if (a[i] == -1 && operators[i] != '0') {
+                int A = pop();
+                int B = pop();
+                int res = evaluate(A, B, operators[i]);
+                push(res);
+            }
+        }
+        cout << "The evaluated prefix output is: " << stack[top] << endl;
+    }
+
+    return 0;
+}

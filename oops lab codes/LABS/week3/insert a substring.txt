@@ -1,0 +1,53 @@
+// Program by Anamay Tripathy
+// Inserting a Substring into a Main String
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+void insertSubstring(char mainStr[], char subStr[], int index) {
+    int lenMain = strlen(mainStr);
+    int lenSub = strlen(subStr);
+
+    // Prevent buffer overflow
+    if (lenMain + lenSub >= 100) {
+        cout << "Error: String length exceeds buffer limit after insertion.\n";
+        return;
+    }
+
+    // Shift characters to the right to make space for the substring
+    for (int i = lenMain; i >= index; i--) {
+        mainStr[i + lenSub] = mainStr[i];
+    }
+
+    // Insert substring at the given index
+    for (int i = 0; i < lenSub; i++) {
+        mainStr[index + i] = subStr[i];
+    }
+
+    cout << "The string after insertion is:\n" << mainStr << endl;
+}
+
+int main() {
+    char mainStr[100], subStr[100];
+    int index;
+
+    cout << "Please enter the main string:\n";
+    cin.getline(mainStr, 100);
+
+    cout << "Please enter the substring:\n";
+    cin.getline(subStr, 100);
+
+    cout << "Please enter the index at which the substring has to be inserted:\n";
+    cin >> index;
+
+    // Validate index
+    if (index < 0 || index > strlen(mainStr)) {
+        cout << "Error: Invalid index value.\n";
+        return 1;
+    }
+
+    insertSubstring(mainStr, subStr, index);
+
+    return 0;
+}

@@ -1,0 +1,126 @@
+// Name: Anamay Tripathy
+// Code: 230968270
+
+#include <iostream>
+#include <string.h>
+#include <cctype>
+#include <sstream>
+using namespace std;
+
+#define N 20
+
+class Stack {
+private:
+    int top;
+    char a[N];
+
+public:
+    Stack() {
+        top = -1;
+    }
+    void push(char e) {
+        if (isfull()) {
+            cout << "The stack is full" << endl;
+        } else {
+            top++;
+            a[top] = e;
+        }
+    }
+    bool isfull() {
+        return (top == N - 1);
+    }
+    void display() {
+        for (int i = top; i >= 0; i--)
+            cout << a[i] << " ";
+        cout << endl;
+    }
+};
+
+void toggle(char a[20]) {
+    for (int i = 0; i < strlen(a); i++) {
+        if (isupper(a[i])) {
+            a[i] = tolower(a[i]);
+        } else if (islower(a[i])) {
+            a[i] = toupper(a[i]);
+        }
+    }
+    for (int i = 0; i < strlen(a); i++) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+}
+
+bool checkvowel(char c) {
+    char v[] = "aeiouAEIOU";
+    return (strchr(v, c) != nullptr);
+}
+
+int main() {
+    char in[20];
+    Stack vowel, cons;
+    int ch;
+    
+    while (1) {
+        cout << "Please enter your choice" << endl;
+        cout << "1. Toggle case and display" << endl;
+        cout << "2. Store Vowels in stack and display" << endl;
+        cout << "3. Store consonants and display" << endl;
+        cout << "4. All of the above" << endl;
+        cout << "5. Exit" << endl;
+        cin >> ch;
+        cin.ignore();
+
+        switch (ch) {
+        case 1:
+            cout << "Please enter the string" << endl;
+            cin.getline(in, 20);
+            toggle(in);
+            break;
+        case 2:
+            cout << "Please enter the string" << endl;
+            cin.getline(in, 20);
+            for (int i = 0; i < strlen(in); i++) {
+                if (checkvowel(in[i])) {
+                    vowel.push(in[i]);
+                }
+            }
+            cout << "The vowels stack contains" << endl;
+            vowel.display();
+            break;
+        case 3:
+            cout << "Please enter the string" << endl;
+            cin.getline(in, 20);
+            for (int i = 0; i < strlen(in); i++) {
+                if (!checkvowel(in[i])) {
+                    cons.push(in[i]);
+                }
+            }
+            cout << "The Consonants stack contains" << endl;
+            cons.display();
+            break;
+        case 4:
+            cout << "Please enter the string" << endl;
+            cin.getline(in, 20);
+            toggle(in);
+            for (int i = 0; i < strlen(in); i++) {
+                if (checkvowel(in[i])) {
+                    vowel.push(in[i]);
+                } else {
+                    cons.push(in[i]);
+                }
+            }
+            cout << "The vowels stack contains" << endl;
+            vowel.display();
+            cout << "The Consonants stack contains" << endl;
+            cons.display();
+            break;
+        case 5:
+            exit(0);
+        default:
+            cout << "Invalid choice" << endl;
+            exit(0);
+        }
+    }
+
+    return 0;
+}

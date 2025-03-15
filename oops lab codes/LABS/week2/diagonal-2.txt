@@ -1,0 +1,58 @@
+// # anamaytripathy
+#include <iostream>
+using namespace std;
+
+int main() {
+    int m;
+
+    // Getting matrix dimension
+    cout << "Enter the dimension of the diagonal matrix: ";
+    cin >> m;
+
+    if (m <= 0) {
+        cout << "Invalid matrix dimension! Exiting program.\n";
+        return 1;
+    }
+
+    int diagonal[m]; // 1D array to store diagonal elements
+
+    // Input only diagonal elements
+    cout << "Enter the " << m << " non-zero diagonal elements: ";
+    for (int i = 0; i < m; i++) {
+        cin >> diagonal[i];
+    }
+
+    // Display the diagonal matrix
+    cout << "\nThe entered diagonal matrix is:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
+            if (i == j)
+                cout << diagonal[i] << " ";
+            else
+                cout << "0 ";
+        }
+        cout << endl;
+    }
+
+    // Display the mapped array
+    cout << "\nThe mapped 1D array (storing only diagonal elements) is:\n";
+    for (int i = 0; i < m; i++) {
+        cout << diagonal[i] << " ";
+    }
+    cout << endl;
+
+    // Retrieve an element from the matrix
+    int row, col;
+    cout << "\nEnter the row and column to retrieve: ";
+    cin >> row >> col;
+
+    if (row < 0 || row >= m || col < 0 || col >= m) {
+        cout << "Invalid indices! Please enter values within the matrix size.\n";
+    } else if (row != col) {
+        cout << "The element at (" << row << ", " << col << ") is: 0\n";
+    } else {
+        cout << "The element at (" << row << ", " << col << ") is: " << diagonal[row] << endl;
+    }
+
+    return 0;
+}

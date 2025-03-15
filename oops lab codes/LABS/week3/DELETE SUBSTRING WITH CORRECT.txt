@@ -1,0 +1,43 @@
+// Program by Anamay Tripathy
+// Removing all occurrences of a substring from a string
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() {
+    char mainStr[50], subStr[50]; // Renamed 'main' to 'mainStr' and 'sub' to 'subStr'
+    int i, j, k, lengthMain, lengthSub, flag;
+
+    cout << "Please enter your main string: \n";
+    cin.getline(mainStr, 50);
+    cout << "Please enter your substring: \n";
+    cin.getline(subStr, 50);
+
+    lengthMain = strlen(mainStr);
+    lengthSub = strlen(subStr);
+
+    for (i = 0; i <= lengthMain - lengthSub; i++) {
+        if (mainStr[i] == subStr[0]) {
+            flag = 1;
+            for (j = 0; j < lengthSub; j++) {
+                if (mainStr[i + j] != subStr[j]) {
+                    flag = 0;
+                    break;
+                }
+            }
+            if (flag == 1) {
+                for (k = i; k <= lengthMain - lengthSub; k++) {  // Fixed shifting loop
+                    mainStr[k] = mainStr[k + lengthSub];
+                }
+                mainStr[k] = '\0';  // Ensure null termination
+                lengthMain = strlen(mainStr);
+                i = -1;  // Reset index to check for repeated occurrences
+            }
+        }
+    }
+
+    cout << "The string after deletion is:\n" << mainStr << endl;
+
+    return 0;
+}

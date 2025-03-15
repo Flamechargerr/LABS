@@ -1,0 +1,114 @@
+//220968002
+//Anamay Tripathy
+//Implementation of queues using Linked List
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* front = NULL;
+struct node* rear = NULL;
+
+void enqueue() {
+    struct node* newnode = new struct node;
+    cout << "Please enter data to add: ";
+    cin >> newnode->data;
+    newnode->next = NULL;
+
+    if (front == NULL && rear == NULL) {
+        front = rear = newnode;
+    } else {
+        rear->next = newnode;
+        rear = newnode;
+    }
+}
+
+void dequeue() {
+    if (front == NULL) {
+        cout << "The queue is empty." << endl;
+        return;
+    }
+
+    struct node* temp = front;
+    cout << "Dequeued element: " << temp->data << endl;
+
+    if (front == rear) {
+        front = rear = NULL;
+    } else {
+        front = front->next;
+    }
+
+    temp->next = NULL;
+    delete temp;
+}
+
+void display() {
+    if (front == NULL) {
+        cout << "The queue is empty." << endl;
+        return;
+    }
+
+    struct node* temp = front;
+    cout << "The queue elements are: ";
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+void Front() {
+    if (front == NULL) {
+        cout << "The queue is empty." << endl;
+        return;
+    }
+    cout << "The front element in the queue is: " << front->data << endl;
+}
+
+void Rear() {
+    if (rear == NULL) {
+        cout << "The queue is empty." << endl;
+        return;
+    }
+    cout << "The rear element in the queue is: " << rear->data << endl;
+}
+
+int main() {
+    int ch;
+    while (true) {
+        cout << "\nPlease enter your choice:" << endl;
+        cout << "1. Enqueue element to the queue" << endl;
+        cout << "2. Dequeue element from the queue" << endl;
+        cout << "3. Display elements of queue" << endl;
+        cout << "4. View front element of the queue" << endl;
+        cout << "5. View rear element of the queue" << endl;
+        cout << "6. Exit" << endl;
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+                enqueue();
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                Front();
+                break;
+            case 5:
+                Rear();
+                break;
+            case 6:
+                exit(0);
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    }
+}

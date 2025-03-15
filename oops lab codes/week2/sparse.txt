@@ -1,0 +1,78 @@
+// Anamay Tripathy
+// Sparse Matrix Representation and Reconstruction
+
+#include <iostream>
+using namespace std;
+
+struct Sparse {
+    int row, col, value;
+};
+
+int main() {
+    Sparse s[20];  // Sparse matrix representation
+    int matrix[20][20], b[20][20];  // Original and reconstructed matrices
+    int m, n, i, j, k = 0, nonZeroCount = 0;
+
+    // Input matrix dimensions
+    cout << "Please enter the dimensions of the matrix: ";
+    cin >> m >> n;
+
+    // Input matrix elements
+    cout << "Please enter the elements of the matrix:\n";
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            cin >> matrix[i][j];
+            if (matrix[i][j] != 0) {
+                nonZeroCount++;
+            }
+        }
+    }
+
+    // Display original matrix
+    cout << "Your entered matrix is:\n";
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    // Store sparse matrix representation
+    s[0].row = m;
+    s[0].col = n;
+    s[0].value = nonZeroCount;
+
+    for (i = 0, k = 1; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            if (matrix[i][j] != 0) {
+                s[k].row = i;
+                s[k].col = j;
+                s[k].value = matrix[i][j];
+                k++;
+            }
+        }
+    }
+
+    // Initialize reconstructed matrix with zeros
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            b[i][j] = 0;
+        }
+    }
+
+    // Reconstruct the matrix from sparse representation
+    for (k = 1; k <= nonZeroCount; k++) {
+        b[s[k].row][s[k].col] = s[k].value;
+    }
+
+    // Display reconstructed matrix
+    cout << "The matrix after retrieving is:\n";
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < n; j++) {
+            cout << b[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
